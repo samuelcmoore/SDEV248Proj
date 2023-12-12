@@ -21,6 +21,11 @@ public class SpelunkerController : MonoBehaviour
     Rigidbody2D rigidbody2d;
     float horizontal;
     float vertical;
+    
+    AudioSource audioSource;
+
+    public AudioClip hitSound;
+
 
     Animator animator;
     Vector2 lookDirection = new Vector2(1, 0);
@@ -32,6 +37,7 @@ public class SpelunkerController : MonoBehaviour
         animator = GetComponent<Animator>();
 
         currentHealth = maxHealth;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -78,6 +84,8 @@ public class SpelunkerController : MonoBehaviour
 
             isInvincible = true;
             invincibleTimer = timeInvincible;
+
+            PlaySound(hitSound);
         }
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
@@ -86,9 +94,14 @@ public class SpelunkerController : MonoBehaviour
         {
             if (currentHealth == 0)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+                SceneManager.LoadScene("Menu 1");
             }
         }
+    }
+    
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
     
 }

@@ -12,12 +12,18 @@ public class EnemyController : MonoBehaviour
     float timer;
     int direction = 1;
 
+    AudioSource audioSource;
+    public AudioClip slimeJumpClip;
+
     // Start is called before the first frame update
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         timer = changeTime;
+
+        audioSource = GetComponent<AudioSource>();
     }
+
 
     void Update()
     {
@@ -27,6 +33,8 @@ public class EnemyController : MonoBehaviour
         {
             direction = -direction;
             timer = changeTime;
+
+            PlaySound(slimeJumpClip);
         }
     }
 
@@ -54,5 +62,10 @@ public class EnemyController : MonoBehaviour
         {
             player.ChangeHealth(-1);
         }
+    }
+    
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }
